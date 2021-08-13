@@ -1,0 +1,17 @@
+{
+    "name": "Twitter-InvertColor",
+    "version": "1.0.0",
+    "manifest_version": 2,
+    "description": "Invert follow/following button colors",
+    "icons": {
+        "128": "128.png"
+    },
+    "content_scripts": [{
+        "matches": [
+            "https://twitter.com/*"
+        ],
+        "js": [
+            "content.js"
+        ]
+    }]
+}
