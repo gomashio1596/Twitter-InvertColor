@@ -18,7 +18,8 @@ const colors = [
         "rgb(15, 20, 25)"
     ]
 ]
-window.addEventListener("load", () => {
+
+function main() {
     let nightMode = document.cookie.match(/night_mode=(\d)/);
     let nightModeNum = parseInt(nightMode[1]);
     let style = document.getElementById("invertColor-style") ?? document.createElement("style");
@@ -30,20 +31,36 @@ window.addEventListener("load", () => {
     }
     
     div[role="button"][data-testid$="-follow"] {
-        border-color: var(--border-color);
-        background-color: var(--transparent-color);
+        border-color: var(--border-color) !important;
+        background-color: var(--transparent-color) !important;
     }
-    div[role="button"][data-testid$="-follow"] > div {
-        color: var(--fill-color);
+    div[role="button"][data-testid$="-follow"] > div,
+    div[role="button"][data-testid$="-follow"] > span {
+        color: var(--fill-color) !important;
     }
     div[role="button"][data-testid$="-unfollow"] {
-        border-color: var(--border-color);
-        background-color: var(--fill-color);
+        border-color: var(--border-color) !important;
+        background-color: var(--fill-color) !important;
     }
-    div[role="button"][data-testid$="-unfollow"] > div {
-        color: var(--text-color);
+    div[role="button"][data-testid$="-unfollow"] > div,
+    div[role="button"][data-testid$="-unfollow"] > span {
+        color: var(--text-color) !important;
     }`;
     if (style.parentNode === null) {
         document.head.appendChild(style);
     }
+}
+
+window.addEventListener("load", () => {
+    setInterval(() => {
+        document.querySelectorAll(`input[name^=background_picker_]`).forEach(element =>  {
+            if (element.getAttribute("colorChangeCheck-InvertColor") != "true") {
+                element.addEventListener("click", () => {
+                    setTimeout(main, 0);
+                });
+                element.setAttribute("colorChangeCheck-InvertColor", "true");
+            }
+        });
+    }, 500);
+    main()
 });
